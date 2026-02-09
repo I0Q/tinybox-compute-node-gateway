@@ -1,0 +1,17 @@
+[Unit]
+Description=Tinybox Compute Node Gateway (VPC)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/tinybox-compute-node-gateway
+Environment=TINYBOX_BASE=http://100.75.30.1:8790
+Environment=TINYBOX_TOKEN_FILE=/root/.config/storyforge-cloud/tinybox_token
+Environment=GATEWAY_TOKEN_FILE=/root/.config/storyforge-cloud/gateway_token
+ExecStart=/opt/tinybox-compute-node-gateway/.venv/bin/uvicorn app.main:app --host 10.108.0.3 --port 8791
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
